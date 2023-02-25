@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@2.51.1/dist/full.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <h2
+      class="bg-gray-100 py-10 font-semibold text-3xl text-center capitalize shadow-lg border-b-2 border-gray-200 mb-10"
+    >
+      Rest Countries API - Language , Region & Country
+    </h2>
+    <section
+      id="country-container"
+      class="container mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-10 py-10"
+    ></section>
+
+    <input type="checkbox" id="my-modal-6" class="modal-toggle" />
+    <div id="modalBox" class="modal modal-bottom sm:modal-middle"></div>
+    <div class="text-center py-6">
+      <button
+        onclick="loadData(true)"
+        class="btn btn-secondary capitalize font-semibold text-2xl"
+      >
+        show next
+      </button>
+    </div>
+    <script src="js/main.js"></script>
+  </body>
+</html>
