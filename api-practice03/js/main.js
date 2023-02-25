@@ -1,7 +1,9 @@
 const countryContainer = document.getElementById("country-container");
 
-const loadData = async (isShowNext) => {
-  const URL = "https://restcountries.com/v2/lang/ar";
+let language = "ar";
+
+const loadLangData = async (isShowNext) => {
+  const URL = `https://restcountries.com/v2/lang/${language}`;
   const res = await fetch(URL);
   const data = await res.json();
   if (isShowNext) {
@@ -18,9 +20,9 @@ const displayAllData = (data) => {
 
     const countryDiv = document.createElement("div");
     countryDiv.classList.add("card", "w-full", "bg-base-100", "shadow-2xl");
-    countryDiv.innerHTML += `
+    countryDiv.innerHTML = `
           <figure>
-          <img class="w-[100%] h-[250px]" src="${
+          <img class="w-[100%] h-[200px]" src="${
             flags.svg
               ? flags.svg
               : "https://i.ytimg.com/vi/ASeHQ-nVzvY/maxresdefault.jpg"
@@ -63,10 +65,10 @@ const showData = async (code) => {
          
 
           <div class="modal-action">
-              <label for="my-modal-6" class="btn">Close</label>
+              <label for="my-modal-6" class="btn btn-primary">Close</label>
           </div>
         </div> 
   `;
 };
 
-loadData();
+loadLangData();

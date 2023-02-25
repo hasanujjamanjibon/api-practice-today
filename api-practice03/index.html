@@ -18,17 +18,25 @@
     >
       Rest Countries API - Language , Region & Country
     </h2>
+    <section>
+      <select id="">
+        <option value=""></option>
+      </select>
+    </section>
     <section
       id="country-container"
-      class="container mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-10 py-10"
+      class="container mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-10 py-10 px-3 md:px-0"
     ></section>
 
     <input type="checkbox" id="my-modal-6" class="modal-toggle" />
-    <div id="modalBox" class="modal modal-bottom sm:modal-middle"></div>
+    <div
+      id="modalBox"
+      class="modal modal-bottom sm:modal-middle px-3 md:px-0"
+    ></div>
     <div class="text-center py-6">
       <button
-        onclick="loadData(true)"
-        class="btn btn-secondary capitalize font-semibold text-2xl"
+        onclick="loadLangData(true)"
+        class="btn btn-primary capitalize font-semibold text-2xl"
       >
         show next
       </button>
