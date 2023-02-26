@@ -1,13 +1,13 @@
 const countryContainer = document.getElementById("country-container");
 const baseURL = "https://restcountries.com/v2/";
-let type = "lang";
-let searchText = "en";
+let type = "region";
+let searchText = "asia";
 
 const loadData = async (isShowNext) => {
   const URL = `${baseURL}${type}/${searchText}`;
   const res = await fetch(URL);
   const data = await res.json();
-  console.log(data);
+  // console.log(data);
 
   if (isShowNext) {
     document.getElementById("btn-showNext").classList.add("hidden");
@@ -22,7 +22,7 @@ const displayAllData = (data) => {
   countryContainer.innerHTML = "";
   data.forEach((data) => {
     const { cca2, name, population, flags, alpha2Code } = data;
-    console.log(data);
+    // console.log(data);
     const countryDiv = document.createElement("div");
     countryDiv.classList.add("card", "w-full", "bg-base-100", "shadow-2xl");
     countryDiv.innerHTML = `
@@ -45,6 +45,7 @@ const displayAllData = (data) => {
     `;
     countryContainer.appendChild(countryDiv);
   });
+  spinner(false);
 };
 
 const showData = async (code) => {
@@ -85,23 +86,35 @@ const loadRegionData = async () => {
   const data = await response.json();
   return displayAllData(data.slice(0, 3));
 };
+// spinner
+const spinner = (isSpin) => {
+  if (isSpin) {
+    document.getElementById("spinner").classList.add("flex");
+    document.getElementById("spinner").classList.remove("hidden");
+  } else {
+    document.getElementById("spinner").classList.add("hidden");
+    document.getElementById("spinner").classList.remove("flex");
+  }
+};
 const getTextByFunction = (types, searchTextElement) => {
+  spinner(true);
   document.getElementById("btn-showNext").classList.remove("hidden");
   type = types;
   searchText = searchTextElement;
 };
 document.getElementById("regionBtn").addEventListener("click", function () {
-  getTextByFunction("region", "europe");
+  getTextByFunction("region", "asia");
+  spinner(true);
   loadData();
 });
 document.getElementById("capitaBtn").addEventListener("click", function () {
   getTextByFunction("capital", "Luanda");
-
+  spinner(true);
   loadData();
 });
 document.getElementById("languageBtn").addEventListener("click", function () {
   getTextByFunction("lang", "ar");
-
+  spinner(true);
   loadData();
 });
 

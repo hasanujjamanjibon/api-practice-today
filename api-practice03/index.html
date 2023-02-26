@@ -23,10 +23,18 @@
       <button id="regionBtn" class="btn btn-secondary">Region</button>
       <button id="capitaBtn" class="btn btn-secondary">Capital</button>
       <button id="languageBtn" class="btn btn-secondary">Language</button>
-      <!--       <select id="selectContainer">
-        
-      </select> -->
     </section>
+    <div id="spinner" class="h-screen hidden items-center justify-center">
+      <div
+        class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-warning border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+        role="status"
+      >
+        <span
+          class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+          >Loading...</span
+        >
+      </div>
+    </div>
     <section
       id="country-container"
       class="container mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-10 py-10 px-3 md:px-0"
