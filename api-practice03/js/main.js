@@ -1,7 +1,7 @@
 const countryContainer = document.getElementById("country-container");
 const baseURL = "https://restcountries.com/v2/";
 let type = "lang";
-let searchText = "bn";
+let searchText = "en";
 
 const loadData = async (isShowNext) => {
   const URL = `${baseURL}${type}/${searchText}`;
@@ -28,8 +28,8 @@ const displayAllData = (data) => {
     countryDiv.innerHTML = `
           <figure>
           <img class="w-[100%] h-[200px]" src="${
-            flags.svg
-              ? flags.svg
+            flags
+              ? flags.png
               : "https://i.ytimg.com/vi/ASeHQ-nVzvY/maxresdefault.jpg"
           }" alt="" />
           </figure>
@@ -58,8 +58,8 @@ const showData = async (code) => {
           
           <figure>
               <img src="${
-                flags.svg
-                  ? flags.svg
+                flags
+                  ? flags.png
                   : "https://i.ytimg.com/vi/ASeHQ-nVzvY/maxresdefault.jpg"
               }" class="shadow-lg w-[100%] h-[230px]" alt="" />
           </figure>
@@ -85,16 +85,22 @@ const loadRegionData = async () => {
   const data = await response.json();
   return displayAllData(data.slice(0, 3));
 };
-
+const getTextByFunction = (types, searchTextElement) => {
+  document.getElementById("btn-showNext").classList.remove("hidden");
+  type = types;
+  searchText = searchTextElement;
+};
 document.getElementById("regionBtn").addEventListener("click", function () {
-  type = "region";
-  searchText = "europe";
-
+  getTextByFunction("region", "europe");
   loadData();
 });
 document.getElementById("capitaBtn").addEventListener("click", function () {
-  type = "capital";
-  searchText = "Luanda";
+  getTextByFunction("capital", "Luanda");
+
+  loadData();
+});
+document.getElementById("languageBtn").addEventListener("click", function () {
+  getTextByFunction("lang", "ar");
 
   loadData();
 });
