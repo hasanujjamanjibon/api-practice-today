@@ -1,12 +1,17 @@
 const countryContainer = document.getElementById("country-container");
+const baseURL = "https://restcountries.com/v2/";
+let type = "lang";
+let searchText = "bn";
 
-let language = "ar";
-
-const loadLangData = async (isShowNext) => {
-  const URL = `https://restcountries.com/v2/lang/${language}`;
+const loadData = async (isShowNext) => {
+  const URL = `${baseURL}${type}/${searchText}`;
   const res = await fetch(URL);
   const data = await res.json();
+  console.log(data);
+
   if (isShowNext) {
+    document.getElementById("btn-showNext").classList.add("hidden");
+
     country = displayAllData(data.slice(12, data.length));
     return country;
   }
@@ -16,8 +21,8 @@ const loadLangData = async (isShowNext) => {
 const displayAllData = (data) => {
   countryContainer.innerHTML = "";
   data.forEach((data) => {
-    const { name, population, flags, alpha2Code } = data;
-
+    const { cca2, name, population, flags, alpha2Code } = data;
+    console.log(data);
     const countryDiv = document.createElement("div");
     countryDiv.classList.add("card", "w-full", "bg-base-100", "shadow-2xl");
     countryDiv.innerHTML = `
@@ -29,10 +34,12 @@ const displayAllData = (data) => {
           }" alt="" />
           </figure>
           <div class="card-body text-center">
-          <h2 class="card-title justify-center font-bold  text-2xl"> ${name}</h2>
+          <h2 class="card-title justify-center font-bold  text-2xl">${name}</h2>
           <p class="card-title justify-center  font-bold text-xl">Population : ${population} </p>
           <div class="card-actions justify-center">
-          <label for="my-modal-6" onclick="showData('${alpha2Code}')" class="btn btn-secondary">More Details</label>
+          <label for="my-modal-6" onclick="showData('${
+            alpha2Code ? alpha2Code : cca2
+          }')" class="btn btn-secondary">More Details</label>
           </div>
           </div>
     `;
@@ -44,7 +51,7 @@ const showData = async (code) => {
   const URL = `https://restcountries.com/v2/alpha/${code}`;
   const res = await fetch(URL);
   const data = await res.json();
-  console.log(data);
+  // console.log(data);
   const { flags, region, area, nativeName, numericCode, independent } = data;
   modalBox.innerHTML = `
         <div class="modal-box">
@@ -70,5 +77,26 @@ const showData = async (code) => {
         </div> 
   `;
 };
+/* region data loading here */
+const loadRegionData = async () => {
+  const URL = `${baseURL}${type}/${searchText}`;
 
-loadLangData();
+  const response = await fetch(URL);
+  const data = await response.json();
+  return displayAllData(data.slice(0, 3));
+};
+
+document.getElementById("regionBtn").addEventListener("click", function () {
+  type = "region";
+  searchText = "europe";
+
+  loadData();
+});
+document.getElementById("capitaBtn").addEventListener("click", function () {
+  type = "capital";
+  searchText = "Luanda";
+
+  loadData();
+});
+
+loadData();

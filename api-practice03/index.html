@@ -16,12 +16,15 @@
     <h2
       class="bg-gray-100 py-10 font-semibold text-3xl text-center capitalize shadow-lg border-b-2 border-gray-200 mb-10"
     >
-      Rest Countries API - Language , Region & Country
+      Rest Countries API - Language , Region & Capital City
     </h2>
     <section>
-      <select id="">
-        <option value=""></option>
-      </select>
+      <span>Filter By : </span>
+      <button id="regionBtn" class="btn btn-secondary">Region</button
+      ><button id="capitaBtn" class="btn btn-secondary">Capital</button>
+      <!--       <select id="selectContainer">
+        
+      </select> -->
     </section>
     <section
       id="country-container"
@@ -35,7 +38,8 @@
     ></div>
     <div class="text-center py-6">
       <button
-        onclick="loadLangData(true)"
+        id="btn-showNext"
+        onclick="loadData(true)"
         class="btn btn-primary capitalize font-semibold text-2xl"
       >
         show next
