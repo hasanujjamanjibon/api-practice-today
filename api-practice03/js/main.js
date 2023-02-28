@@ -78,14 +78,6 @@ const showData = async (code) => {
         </div> 
   `;
 };
-/* region data loading here */
-const loadRegionData = async () => {
-  const URL = `${baseURL}${type}/${searchText}`;
-
-  const response = await fetch(URL);
-  const data = await response.json();
-  return displayAllData(data.slice(0, 3));
-};
 // spinner
 const spinner = (isSpin) => {
   if (isSpin) {
