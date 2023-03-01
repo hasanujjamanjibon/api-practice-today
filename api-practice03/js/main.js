@@ -1,20 +1,21 @@
 const countryContainer = document.getElementById("country-container");
-const baseURL = "https://restcountries.com/v2/";
+const baseURL = "https://restcountries.com/v2";
 let type = "region";
-let searchText = "europe";
+let searchText = "asia";
 
 const loadData = async (isShowNext) => {
-  const URL = `${baseURL}${type}/${searchText}`;
+  const URL = `${baseURL}/${type}/${searchText}`;
+  console.log(URL);
   const res = await fetch(URL);
   const data = await res.json();
   // console.log(data);
 
   if (isShowNext) {
     document.getElementById("btn-showNext").classList.add("hidden");
-
     country = displayAllData(data.slice(12, data.length));
     return country;
   }
+  document.getElementById("btn-showNext").classList.remove("hidden");
   country = displayAllData(data.slice(0, 12));
 };
 
@@ -22,7 +23,7 @@ const displayAllData = (data) => {
   countryContainer.innerHTML = "";
   data.forEach((data) => {
     const { cca2, name, population, flags, alpha2Code } = data;
-    // console.log(data);
+
     const countryDiv = document.createElement("div");
     countryDiv.classList.add("card", "w-full", "bg-base-100", "shadow-2xl");
     countryDiv.innerHTML = `
@@ -47,7 +48,7 @@ const displayAllData = (data) => {
   });
   spinner(false);
 };
-
+// Modal
 const showData = async (code) => {
   const URL = `https://restcountries.com/v2/alpha/${code}`;
   const res = await fetch(URL);
@@ -88,32 +89,39 @@ const spinner = (isSpin) => {
     document.getElementById("spinner").classList.remove("flex");
   }
 };
-const getTextByFunction = (types, searchTextElement) => {
-  spinner(true);
+const getTextByFunction = (searchTextElement) => {
   document.getElementById("btn-showNext").classList.remove("hidden");
-  type = types;
+  spinner(true);
   searchText = searchTextElement;
-
+  loadData();
 };
-document.getElementById("regionBtn").addEventListener("click", function () {
-  getTextByFunction("region", "asia");
-  spinner(true);
-  loadData();
-});
-document.getElementById("capitaBtn").addEventListener("click", function () {
-  getTextByFunction("capital", "Luanda");
-  spinner(true);
-  loadData();
-});
-document.getElementById("languageBtn").addEventListener("click", function () {
-  getTextByFunction("lang", "ar");
-  spinner(true);
-  loadData();
-});
 
-function val() {
+// Lang api fetch from file
+const fecthLangApi = async () => {
+  const res = await fetch("../langApi.json");
+  const data = await res.json();
+  loadLang(data);
+};
+const loadLang = (data) => {
+  data.forEach((data) => {
+    const { code } = data;
+
+    const langSelectElement = document.getElementById("lang-option");
+    langSelectElement.innerHTML += `
+    <option  onclick="getTextByFunction('${code}')" value='${code}'>${code}</option>
+    `;
+  });
+  spinner(false);
+};
+const val = () => {
   searchText = document.getElementById("select_id").value;
   loadData();
-}
+};
 
+const language = () => {
+  searchText = document.getElementById("lang-option").value;
+  loadData();
+};
+
+fecthLangApi();
 loadData();
