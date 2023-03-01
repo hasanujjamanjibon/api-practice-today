@@ -1,7 +1,7 @@
 const countryContainer = document.getElementById("country-container");
 const baseURL = "https://restcountries.com/v2/";
 let type = "region";
-let searchText = "asia";
+let searchText = "europe";
 
 const loadData = async (isShowNext) => {
   const URL = `${baseURL}${type}/${searchText}`;
@@ -93,6 +93,7 @@ const getTextByFunction = (types, searchTextElement) => {
   document.getElementById("btn-showNext").classList.remove("hidden");
   type = types;
   searchText = searchTextElement;
+
 };
 document.getElementById("regionBtn").addEventListener("click", function () {
   getTextByFunction("region", "asia");
@@ -109,5 +110,10 @@ document.getElementById("languageBtn").addEventListener("click", function () {
   spinner(true);
   loadData();
 });
+
+function val() {
+  searchText = document.getElementById("select_id").value;
+  loadData();
+}
 
 loadData();

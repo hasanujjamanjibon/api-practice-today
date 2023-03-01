@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Rest API - Language , Region & Capital City</title>
     <link
       href="https://cdn.jsdelivr.net/npm/daisyui@2.51.1/dist/full.css"
       rel="stylesheet"
@@ -23,6 +23,20 @@
       <button id="regionBtn" class="btn btn-secondary">Region</button>
       <button id="capitaBtn" class="btn btn-secondary">Capital</button>
       <button id="languageBtn" class="btn btn-secondary">Language</button>
+    </section>
+    <section class="bg-slate-300 px-4 py-5">
+      <span>Filter By : </span>
+      <select onchange="val()" class="px-4 py-2 rounded-md" id="select_id">
+        <option onclick="getTextByFunction('region', 'Africa')">Africa</option>
+        <option onclick="getTextByFunction('region', 'Americas')">
+          Americas
+        </option>
+        <option onclick="getTextByFunction('region', 'Asia')">Asia</option>
+        <option onclick="getTextByFunction('region', 'Europe')">Europe</option>
+        <option onclick="getTextByFunction('region', 'Oceania')">
+          Oceania
+        </option>
+      </select>
     </section>
     <div id="spinner" class="h-screen hidden items-center justify-center">
       <div
