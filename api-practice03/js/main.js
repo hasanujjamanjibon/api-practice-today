@@ -1,6 +1,8 @@
 const countryContainer = document.getElementById("country-container");
 const nextBtn = document.getElementById("btn-showNext");
 const spinner = document.getElementById("spinner");
+const langSelectElement = document.getElementById("lang-option");
+const regionSelectElement = document.getElementById("select_id");
 
 const baseURL = "https://restcountries.com/v2";
 let apiType = "region";
@@ -10,14 +12,17 @@ let limit = 12;
 const getApiURL = () => `${baseURL}/${apiType}/${searchText}`;
 
 const loadData = async (isShowNext) => {
-  const URL = getApiURL();
-  const res = await fetch(URL);
-  let data = await res.json();
-  data = isShowNext ? data.slice(limit, data.length) : data.slice(0, limit);
-
-  displayAllData(data);
-  // if 'isShowNext' is true, add "hidden" class, if false remove it.
-  nextBtn.classList.toggle("hidden", !!isShowNext);
+  try {
+    const URL = getApiURL();
+    const res = await fetch(URL);
+    let data = await res.json();
+    data = isShowNext ? data.slice(limit, data.length) : data.slice(0, limit);
+    // if 'isShowNext' is true, add "hidden" class, if false remove it.
+    nextBtn.classList.toggle("hidden", !!isShowNext);
+    displayAllData(data);
+  } catch (error) {
+    if (error) countryContainer.innerHTML = "<h1>No country found!</h1>";
+  }
 };
 
 const displayAllData = (data) => {
@@ -45,7 +50,7 @@ const displayAllData = (data) => {
     `;
   });
 
-  spinner(false);
+  showSpinner(false);
 };
 
 // Modal
@@ -80,41 +85,39 @@ const showData = async (code) => {
 
 // spinner
 const showSpinner = (isSpin) => {
+  // if 'isSpin' is true, add class, if false remove it.
+  // '!!' convert truthy value to true, falsy value to false
   spinner.classList.toggle("flex", !!isSpin);
   spinner.classList.toggle("hidden", !isSpin);
+  if (isSpin) countryContainer.innerHTML = "";
 };
 
 // Lang api fetch from file
 const fecthLangApi = async () => {
   const res = await fetch("../langApi.json");
   const data = await res.json();
-  loadLang(data);
+  loadLangOptions(data);
 };
 
-const loadLang = (data) => {
-  data.forEach((data) => {
-    const { code } = data;
-
-    const langSelectElement = document.getElementById("lang-option");
-    langSelectElement.innerHTML += `
-    <option value='${code}'>${code}</option>
-    `;
+const loadLangOptions = (data) => {
+  data.forEach(({ code }) => {
+    langSelectElement.innerHTML += `<option value='${code}'>${code}</option>`;
   });
-  spinner(false);
 };
 
-const val = () => {
-  searchText = document.getElementById("select_id").value;
+regionSelectElement.addEventListener("change", ({ target }) => {
+  showSpinner(true);
+  searchText = target.value;
   loadData();
-};
+});
 
-const language = () => {
-  spinner(true);
-  searchText = document.getElementById("lang-option").value;
-  document.getElementById("btn-showNext").classList.remove("hidden");
+langSelectElement.addEventListener("change", ({ target }) => {
+  showSpinner(true);
   apiType = "lang";
+  searchText = target.value;
   loadData();
-};
+});
 
+showSpinner(true);
 fecthLangApi();
 loadData();
