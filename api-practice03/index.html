@@ -18,6 +18,7 @@
     >
       Rest API - Language , Region & Capital City
     </h2>
+    <!-- sorting added -->
     <section class="bg-slate-100 px-4 py-5 my-5">
       <span>Filter By : </span>
       <select onchange="val()" class="px-4 py-2 rounded-md" id="select_id">
@@ -42,8 +43,10 @@
         onchange="language()"
         class="px-4 py-2 rounded-md"
         id="lang-option"
-      ></select>
+      >
+    </select>
     </section>
+    <!-- spinner -->
     <div id="spinner" class="h-screen hidden items-center justify-center">
       <div
         class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-warning border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
